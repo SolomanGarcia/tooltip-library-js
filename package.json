@@ -1,0 +1,24 @@
+{
+  "name": "tooltip-library-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SolomanGarcia/tooltip-library-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SolomanGarcia/tooltip-library-js/issues"
+  },
+  "homepage": "https://github.com/SolomanGarcia/tooltip-library-js#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  }
+}
