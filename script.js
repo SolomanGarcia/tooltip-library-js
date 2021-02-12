@@ -1,3 +1,5 @@
+import "./tooltip";
+
 document.addEventListener("keydown", (e) => {
   const container = document.querySelector(".container");
 
