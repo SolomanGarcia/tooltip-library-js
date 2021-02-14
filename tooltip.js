@@ -6,7 +6,8 @@ document.body.append(tooltipContainer);
 
 addGlobalEventListener("mouseover", "[data-tooltip]", (e) => {
   const tooltip = createTooltipElement(e.target.dataset.tooltip);
-  document.body.append(tooltip);
+  tooltipContainer.append(tooltip);
+  positionTooltip(toolbar, e.target);
 
   e.target.addEventListener(
     "mouseleave",
@@ -17,12 +18,14 @@ addGlobalEventListener("mouseover", "[data-tooltip]", (e) => {
   );
 });
 
-// show tooltip over the top of the element
-// when mouse moves off the element remove the tooptip
-
 function createTooltipElement(text) {
   const tooltip = document.createElement("div");
   tooltip.classList.add("tooltip");
   tooltip.innerText = text;
   return tooltip;
+}
+
+function positionTooltip(tooltip, element) {
+  const elementRect = element.getBoundingClientRect();
+  const tooltipRect = tooltip.getBoundingClientRect();
 }
