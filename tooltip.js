@@ -1,9 +1,20 @@
 import addGlobalEventListener from "./utils/addGlobalEventListener.js";
 
-// hover over a tooltip
+const tooltipContainer = document.createElement("div");
+tooltipContainer.classList.add("tooltip-container");
+document.body.append(tooltipContainer);
+
 addGlobalEventListener("mouseover", "[data-tooltip]", (e) => {
   const tooltip = createTooltipElement(e.target.dataset.tooltip);
   document.body.append(tooltip);
+
+  e.target.addEventListener(
+    "mouseleave",
+    () => {
+      tooltip.remove();
+    },
+    { once: true }
+  );
 });
 
 // show tooltip over the top of the element
