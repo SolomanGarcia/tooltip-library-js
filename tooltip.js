@@ -33,6 +33,11 @@ function positionTooltip(tooltip, element) {
   tooltip.style.left = `${
     elementRect.left + elementRect.width / 2 - tooltipRect.width / 2
   }px`;
+
+  const bounds = isOutOfBounds(tooltip);
+  if (bounds.top) {
+    resetTooltipPosition(tooltip);
+  }
 }
 
 function isOutOfBounds(element) {
@@ -45,4 +50,11 @@ function isOutOfBounds(element) {
     top: rect.top < containerRect.top,
     bottom: rect.bottom > containerRect.bottom
   };
+}
+
+function resetTooltipPosition(tooltip) {
+  tooltip.style.left = "initial";
+  tooltip.style.right = "initial";
+  tooltip.style.top = "initial";
+  tooltip.style.bottom = "initial";
 }
