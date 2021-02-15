@@ -7,7 +7,7 @@ document.body.append(tooltipContainer);
 addGlobalEventListener("mouseover", "[data-tooltip]", (e) => {
   const tooltip = createTooltipElement(e.target.dataset.tooltip);
   tooltipContainer.append(tooltip);
-  positionTooltip(toolbar, e.target);
+  positionTooltip(tooltip, e.target);
 
   e.target.addEventListener(
     "mouseleave",
@@ -28,4 +28,7 @@ function createTooltipElement(text) {
 function positionTooltip(tooltip, element) {
   const elementRect = element.getBoundingClientRect();
   const tooltipRect = tooltip.getBoundingClientRect();
+
+  tooltip.style.top = `${elementRect.top - tooltipRect.height}px`;
+  tooltip.style.left = `${elementRect.left + elementRect.width / 2}px`;
 }
