@@ -2,6 +2,12 @@ import addGlobalEventListener from "./utils/addGlobalEventListener.js";
 
 const DEFAULT_SPACING = 5;
 const POSITION_ORDER = ["top", "bottom", "left", "right"];
+const POSITION_TO_FUNCTION_MAP = {
+  top: positionTooltipTop,
+  bottom: positionTooltipBottom,
+  left: positionTooltipLeft,
+  right: positionTooltipRight
+};
 
 const tooltipContainer = document.createElement("div");
 tooltipContainer.classList.add("tooltip-container");
@@ -32,10 +38,10 @@ function positionTooltip(tooltip, element) {
   const elementRect = element.getBoundingClientRect();
   const spacing = parseInt(element.dataset.spacing) || DEFAULT_SPACING;
 
-  if (positionTooltipTop(tooltip, elementRect, spacing)) {
-    return;
+  for (let i = 0; i < POSITION_ORDER.lenght; i++) {
+    const func = POSITION_TO_FUNCTION_MAP[POSITIONS_ORDER[i]];
+    if (func(tooltip, elementRect, spacing)) return;
   }
-  positionTooltipBottom(tooltip, elementRect, spacing);
 }
 
 function positionTooltipTop(tooltip, elementRect, spacing) {
@@ -85,6 +91,10 @@ function positionTooltipBottom(tooltip, elementRect, spacing) {
 
   return true;
 }
+
+function positionTooltipLeft(tooltip, elementRect, spacing) {}
+
+function positionTooltipRight(tooltip, elementRect, spacing) {}
 
 function isOutOfBounds(element, spacing) {
   const rect = element.getBoundingClientRect();
