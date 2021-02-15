@@ -30,5 +30,19 @@ function positionTooltip(tooltip, element) {
   const tooltipRect = tooltip.getBoundingClientRect();
 
   tooltip.style.top = `${elementRect.top - tooltipRect.height}px`;
-  tooltip.style.left = `${elementRect.left + elementRect.width / 2}px`;
+  tooltip.style.left = `${
+    elementRect.left + elementRect.width / 2 - tooltipRect.width / 2
+  }px`;
+}
+
+function isOutOfBounds(element) {
+  const rect = element.getBoundingClientRect();
+  const containerRect = tooltipContainer.getBoundingClientRect();
+
+  return {
+    left: rect.left < containerRect.left,
+    right: rect.right > containerRect.right,
+    top: rect.top < containerRect.top,
+    bottom: rect.bottom > containerRect.bottom
+  };
 }
