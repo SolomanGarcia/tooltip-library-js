@@ -123,11 +123,11 @@ function positionTooltipRight(tooltip, elementRect, spacing) {
   tooltip.style.top = `${
     elementRect.top + elementRect.height / 2 - tooltipRect.height / 2
   }px`;
-  tooltip.style.right = `${elementRect.right + spacing}px`;
+  tooltip.style.left = `${elementRect.right + spacing}px`;
 
   const bounds = isOutOfBounds(tooltip, spacing);
 
-  if (bounds.left) {
+  if (bounds.right) {
     resetTooltipPosition(tooltip);
     return false;
   }
