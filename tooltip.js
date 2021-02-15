@@ -43,6 +43,7 @@ function positionTooltip(tooltip, element) {
     tooltip.style.left = "initial";
   }
   if (bounds.left) {
+    tooltip.style.left = 0;
   }
 }
 
