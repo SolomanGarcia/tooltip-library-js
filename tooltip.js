@@ -36,11 +36,13 @@ function createTooltipElement(text) {
 
 function positionTooltip(tooltip, element) {
   const elementRect = element.getBoundingClientRect();
+  const preferredPositions = (element.dataset.positions || "").split("|");
   const spacing = parseInt(element.dataset.spacing) || DEFAULT_SPACING;
+  const positions = preferredPositions.concat(POSITION_ORDER);
 
-  for (let i = 0; i < POSITION_ORDER.lenght; i++) {
-    const func = POSITION_TO_FUNCTION_MAP[POSITIONS_ORDER[i]];
-    if (func(tooltip, elementRect, spacing)) return;
+  for (let i = 0; i < positions.length; i++) {
+    const func = POSITION_TO_FUNCTION_MAP[positions[i]];
+    if (func && func(tooltip, elementRect, spacing)) return;
   }
 }
 
@@ -92,9 +94,53 @@ function positionTooltipBottom(tooltip, elementRect, spacing) {
   return true;
 }
 
-function positionTooltipLeft(tooltip, elementRect, spacing) {}
+function positionTooltipLeft(tooltip, elementRect, spacing) {
+  const tooltipRect = tooltip.getBoundingClientRect();
+  tooltip.style.top = `${
+    elementRect.top + elementRect.height / 2 - tooltipRect.height / 2
+  }px`;
+  tooltip.style.left = `${elementRect.left - tooltipRect.width - spacing}px`;
 
-function positionTooltipRight(tooltip, elementRect, spacing) {}
+  const bounds = isOutOfBounds(tooltip, spacing);
+
+  if (bounds.left) {
+    resetTooltipPosition(tooltip);
+    return false;
+  }
+  if (bounds.bottom) {
+    tooltip.style.bottom = `${spacing}px`;
+    tooltip.style.top = "initial";
+  }
+  if (bounds.top) {
+    tooltip.style.top = `${spacing}px`;
+  }
+
+  return true;
+}
+
+function positionTooltipRight(tooltip, elementRect, spacing) {
+  const tooltipRect = tooltip.getBoundingClientRect();
+  tooltip.style.top = `${
+    elementRect.top + elementRect.height / 2 - tooltipRect.height / 2
+  }px`;
+  tooltip.style.right = `${elementRect.right + spacing}px`;
+
+  const bounds = isOutOfBounds(tooltip, spacing);
+
+  if (bounds.left) {
+    resetTooltipPosition(tooltip);
+    return false;
+  }
+  if (bounds.bottom) {
+    tooltip.style.bottom = `${spacing}px`;
+    tooltip.style.top = "initial";
+  }
+  if (bounds.top) {
+    tooltip.style.top = `${spacing}px`;
+  }
+
+  return true;
+}
 
 function isOutOfBounds(element, spacing) {
   const rect = element.getBoundingClientRect();
