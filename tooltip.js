@@ -1,6 +1,7 @@
 import addGlobalEventListener from "./utils/addGlobalEventListener.js";
 
 const DEFAULT_SPACING = 5;
+const POSITION_ORDER = ["top", "bottom", "left", "right"];
 
 const tooltipContainer = document.createElement("div");
 tooltipContainer.classList.add("tooltip-container");
@@ -29,9 +30,13 @@ function createTooltipElement(text) {
 
 function positionTooltip(tooltip, element) {
   const elementRect = element.getBoundingClientRect();
-  const tooltipRect = tooltip.getBoundingClientRect();
   const spacing = parseInt(element.dataset.spacing) || DEFAULT_SPACING;
 
+  positionTooltipTop(tooltip, elementRect, spacing);
+}
+
+function positionTooltipTop(tooltip, elementRect, spacing) {
+  const tooltipRect = tooltip.getBoundingClientRect();
   tooltip.style.top = `${elementRect.top - tooltipRect.height - spacing}px`;
   tooltip.style.left = `${
     elementRect.left + elementRect.width / 2 - tooltipRect.width / 2
